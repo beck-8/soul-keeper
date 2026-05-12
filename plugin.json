@@ -9,10 +9,26 @@
   "runtimes": ["claude-code", "openclaw"],
   "entrypoint": "SKILL.md",
   "hooks": [
-    { "event": "PreCompact", "runtime": "claude-code", "command": "node runtimes/claude-code/hooks/pre-compact.mjs" },
-    { "event": "SessionStart", "runtime": "claude-code", "command": "node runtimes/claude-code/hooks/session-start.mjs" },
-    { "event": "before_compaction", "runtime": "openclaw", "dir": "runtimes/openclaw/hooks/before-compaction" },
-    { "event": "agent:bootstrap", "runtime": "openclaw", "dir": "runtimes/openclaw/hooks/agent-bootstrap" }
+    {
+      "event": "PreCompact",
+      "runtime": "claude-code",
+      "command": "node runtimes/claude-code/hooks/pre-compact.mjs"
+    },
+    {
+      "event": "SessionStart",
+      "runtime": "claude-code",
+      "command": "node runtimes/claude-code/hooks/session-start.mjs"
+    },
+    {
+      "event": "before_compaction",
+      "runtime": "openclaw",
+      "dir": "runtimes/openclaw/hooks/before-compaction"
+    },
+    {
+      "event": "agent:bootstrap",
+      "runtime": "openclaw",
+      "dir": "runtimes/openclaw/hooks/agent-bootstrap"
+    }
   ],
   "commands": ["soul-setup", "soul-backup", "soul-restore", "soul-list", "soul-evolve"],
   "postInstall": "node install.mjs"
