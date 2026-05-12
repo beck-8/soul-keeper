@@ -8,12 +8,13 @@ const uploadMock = vi.fn().mockResolvedValue({
 })
 const downloadMock = vi.fn().mockResolvedValue(new Uint8Array([1, 2, 3]))
 const approveServiceMock = vi.fn().mockResolvedValue('0xapproveTxHash')
+const depositMock = vi.fn().mockResolvedValue('0xdepositTxHash')
 
 vi.mock('@filoz/synapse-sdk', () => ({
   Synapse: {
     create: vi.fn().mockResolvedValue({
       storage: { upload: uploadMock, download: downloadMock },
-      payments: { approveService: approveServiceMock },
+      payments: { approveService: approveServiceMock, deposit: depositMock },
     }),
   },
   calibration: { id: 314159, name: 'Calibration' },
@@ -111,5 +112,21 @@ describe('lib/foc', () => {
         rpcUrl: 'https://rpc.example',
       }),
     ).rejects.toThrow(/upload/i)
+  })
+
+  it('depositAndApproveSponsor returns both tx hashes', async () => {
+    const { depositAndApproveSponsor } = await import('../../lib/foc.mjs')
+    const result = await depositAndApproveSponsor({
+      sponsorKey: `0x${'11'.repeat(32)}`,
+      depositAmount: 50n * 10n ** 18n,
+      rateAllowance: 100000n,
+      lockupAllowance: 1000000n,
+      maxLockupPeriod: 86400n,
+      rpcUrl: 'https://rpc.example',
+    })
+    expect(result.depositTx).toBe('0xdepositTxHash')
+    expect(result.approveTx).toBe('0xapproveTxHash')
+    expect(depositMock).toHaveBeenCalledOnce()
+    expect(approveServiceMock).toHaveBeenCalledOnce()
   })
 })

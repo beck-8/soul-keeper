@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      '@filoz/synapse-core':
+        specifier: ^0.5.2
+        version: 0.5.2(typescript@5.9.3)(viem@2.48.11(typescript@5.9.3)(zod@4.4.3))
       '@filoz/synapse-sdk':
         specifier: ^0.41.0
         version: 0.41.0(typescript@5.9.3)(viem@2.48.11(typescript@5.9.3)(zod@4.4.3))
