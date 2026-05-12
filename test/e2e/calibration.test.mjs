@@ -54,7 +54,8 @@ describe.skipIf(SKIP)('e2e: Calibration round trip', () => {
       sessionPrivateKey,
       rpcUrl: sponsor.rpcUrl,
     })
-    expect(pieceCid).toMatch(/^baga6ea4/)
+    // PieceCID may be legacy v1 (baga...) or FRC-0069 v2 (bafkz...) form
+    expect(pieceCid).toMatch(/^(baga6ea4|bafkz)/)
     console.log(`Uploaded PieceCID: ${pieceCid}`)
 
     // 4. Download back
@@ -68,7 +69,9 @@ describe.skipIf(SKIP)('e2e: Calibration round trip', () => {
 
     // 5. Decrypt
     const decrypted = await decryptBundle(downloaded, password)
-    expect(decrypted).toEqual(bundleBytes)
+    // Compare by content; bundleBytes is a Buffer, decrypted is a Uint8Array
+    expect(decrypted.length).toBe(bundleBytes.length)
+    expect(Buffer.from(decrypted).equals(bundleBytes)).toBe(true)
 
     // 6. Extract and verify
     const out = mkdtempSync(join(tmpdir(), 'sk-e2e-out-'))
@@ -79,5 +82,5 @@ describe.skipIf(SKIP)('e2e: Calibration round trip', () => {
     } finally {
       rmSync(out, { recursive: true, force: true })
     }
-  }, 300_000) // 5 min timeout for real FOC roundtrip
+  }, 600_000) // 10 min timeout for real FOC roundtrip (Calibration latency is variable)
 })

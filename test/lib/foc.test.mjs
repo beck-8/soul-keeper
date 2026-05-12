@@ -35,6 +35,10 @@ vi.mock('@filoz/synapse-core/session-key', () => ({
     syncExpirations: vi.fn().mockResolvedValue(undefined),
   }),
   login: vi.fn().mockResolvedValue('0xloginTxHash'),
+  loginSync: vi.fn().mockResolvedValue({
+    receipt: { transactionHash: '0xloginTxHash' },
+    event: { args: {} },
+  }),
 }))
 
 vi.mock('viem/accounts', () => ({
