@@ -144,4 +144,29 @@ describe('lib/uploader', () => {
 
     expect(uploadBundleMock).not.toHaveBeenCalled()
   })
+
+  it('resolveSessionPrivateKey returns explicit arg unchanged', async () => {
+    const { resolveSessionPrivateKey } = await import('../../lib/uploader.mjs')
+    const key = `0x${'33'.repeat(32)}`
+    expect(await resolveSessionPrivateKey({ stateDir: tmp, sessionKey: key })).toBe(key)
+  })
+
+  it('resolveSessionPrivateKey derives from .session-password when no arg', async () => {
+    const { resolveSessionPrivateKey } = await import('../../lib/uploader.mjs')
+    const { deriveSessionKey } = await import('../../lib/wallet.mjs')
+
+    mkdirSync(join(tmp, 'soul-keeper'), { recursive: true })
+    writeFileSync(join(tmp, 'soul-keeper', '.session-password'), 'mu-demo-2026\n')
+
+    const got = await resolveSessionPrivateKey({ stateDir: tmp, sessionKey: undefined })
+    const expected = await deriveSessionKey('mu-demo-2026')
+    expect(got).toBe(expected)
+  })
+
+  it('resolveSessionPrivateKey throws clear error when nothing available', async () => {
+    const { resolveSessionPrivateKey } = await import('../../lib/uploader.mjs')
+    await expect(
+      resolveSessionPrivateKey({ stateDir: tmp, sessionKey: undefined }),
+    ).rejects.toThrow(/sessionKey|session-password/)
+  })
 })
