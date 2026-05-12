@@ -1,10 +1,9 @@
-import { describe, expect, it, vi } from 'vitest'
+import { describe, expect, it } from 'vitest'
 
 describe('lib/sponsor', () => {
-  it('hasSponsorKey returns false when key is empty', async () => {
-    vi.resetModules()
+  it('hasSponsorKey returns true once key is configured', async () => {
     const mod = await import('../../lib/sponsor.mjs')
-    expect(mod.hasSponsorKey()).toBe(false)
+    expect(mod.hasSponsorKey()).toBe(true)
   })
 
   it('SPONSOR_LIMITS exposes rate and lockup allowances', async () => {
@@ -19,9 +18,12 @@ describe('lib/sponsor', () => {
     expect(() => getSponsor({ network: 'mainnet' })).toThrow(/calibration/i)
   })
 
-  it('getSponsor returns key info on calibration when key is set', async () => {
-    // When SPONSOR_KEY is empty, getSponsor on calibration should throw with a clear setup hint
+  it('getSponsor returns key info on calibration', async () => {
     const { getSponsor } = await import('../../lib/sponsor.mjs')
-    expect(() => getSponsor({ network: 'calibration' })).toThrow(/SPONSOR_KEY/)
+    const s = getSponsor({ network: 'calibration' })
+    expect(s.network).toBe('calibration')
+    expect(s.rpcUrl).toMatch(/calibration/i)
+    expect(s.privateKey).toMatch(/^0x[0-9a-f]{64}$/i)
+    expect(s.address).toMatch(/^0x[0-9a-fA-F]{40}$/)
   })
 })
