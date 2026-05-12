@@ -4,6 +4,7 @@ dist/
 
 # Local-only configuration with secrets
 config.json
+.env
 *.env
 *.env.demo
 *.key
