@@ -25,4 +25,3 @@ export class MalformedEnvelopeError extends FocEncryptionError {
 export class SchemeNotSeekableError extends FocEncryptionError {
     code = 'SCHEME_NOT_SEEKABLE';
 }
-//# sourceMappingURL=errors.js.map

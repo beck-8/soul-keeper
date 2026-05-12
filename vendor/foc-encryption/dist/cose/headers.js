@@ -13,4 +13,3 @@ export const COSE_HEADER_KID = 4;
 export const COSE_HEADER_IV = 5;
 export const COSE_HEADER_TYP = 16;
 export const FOC_ENVELOPE_TYPE = 'application/vnd.foc-envelope+cose';
-//# sourceMappingURL=headers.js.map

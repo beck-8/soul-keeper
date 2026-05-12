@@ -53,4 +53,3 @@ function encodeAppMetadata(meta) {
     }
     return map;
 }
-//# sourceMappingURL=encode.js.map

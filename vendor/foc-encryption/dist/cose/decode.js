@@ -81,4 +81,3 @@ function parseRecipient(arr) {
         wrappedKey: wrappedKey && wrappedKey.length > 0 ? wrappedKey : undefined,
     };
 }
-//# sourceMappingURL=decode.js.map

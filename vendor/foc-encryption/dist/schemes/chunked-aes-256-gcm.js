@@ -135,4 +135,3 @@ function deriveChunkNonce(baseNonce, chunkIndex, isLast) {
     return nonce;
 }
 export { DEFAULT_CHUNK_SIZE, AES_GCM_TAG_LENGTH, BASE_NONCE_LENGTH, MAX_CHUNK_INDEX, deriveChunkNonce };
-//# sourceMappingURL=chunked-aes-256-gcm.js.map

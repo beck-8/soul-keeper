@@ -15,4 +15,3 @@ export function parseBlob(blob) {
         ciphertext: remainder,
     };
 }
-//# sourceMappingURL=blob.js.map

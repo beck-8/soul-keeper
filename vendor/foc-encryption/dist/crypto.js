@@ -15,4 +15,3 @@ export async function aesGcmDecrypt(key, iv, ciphertext, additionalData) {
 export async function importAesGcmKey(rawKey) {
     return c.subtle.importKey('raw', rawKey, 'AES-GCM', false, ['encrypt', 'decrypt']);
 }
-//# sourceMappingURL=crypto.js.map

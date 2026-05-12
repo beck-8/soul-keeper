@@ -24,4 +24,3 @@ export declare class ChunkedAes256GcmStream implements EncryptionScheme {
  */
 declare function deriveChunkNonce(baseNonce: Uint8Array, chunkIndex: number, isLast: boolean): Uint8Array;
 export { DEFAULT_CHUNK_SIZE, AES_GCM_TAG_LENGTH, BASE_NONCE_LENGTH, MAX_CHUNK_INDEX, deriveChunkNonce };
-//# sourceMappingURL=chunked-aes-256-gcm.d.ts.map

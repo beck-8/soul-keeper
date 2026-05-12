@@ -11,4 +11,3 @@ export interface DecodedEnvelope {
     envelopeSize: number;
 }
 export declare function decodeCoseEnvelope(blob: Uint8Array): DecodedEnvelope;
-//# sourceMappingURL=decode.d.ts.map

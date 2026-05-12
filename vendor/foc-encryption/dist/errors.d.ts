@@ -19,4 +19,3 @@ export declare class MalformedEnvelopeError extends FocEncryptionError {
 export declare class SchemeNotSeekableError extends FocEncryptionError {
     readonly code: "SCHEME_NOT_SEEKABLE";
 }
-//# sourceMappingURL=errors.d.ts.map

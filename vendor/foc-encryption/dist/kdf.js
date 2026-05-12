@@ -27,4 +27,3 @@ export async function deriveKey(source, existingSalt) {
     }, keyMaterial, 256);
     return { cek: new Uint8Array(bits), salt };
 }
-//# sourceMappingURL=kdf.js.map

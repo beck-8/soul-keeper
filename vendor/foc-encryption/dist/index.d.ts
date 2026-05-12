@@ -50,4 +50,3 @@ MalformedEnvelopeError,
 SchemeNotSeekableError, 
 /** Encryption scheme is not recognized or not supported. */
 UnsupportedSchemeError, } from './errors.js';
-//# sourceMappingURL=index.d.ts.map

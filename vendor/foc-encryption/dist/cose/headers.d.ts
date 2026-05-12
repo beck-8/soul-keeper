@@ -12,4 +12,3 @@ export declare const COSE_HEADER_KID = 4;
 export declare const COSE_HEADER_IV = 5;
 export declare const COSE_HEADER_TYP = 16;
 export declare const FOC_ENVELOPE_TYPE = "application/vnd.foc-envelope+cose";
-//# sourceMappingURL=headers.d.ts.map

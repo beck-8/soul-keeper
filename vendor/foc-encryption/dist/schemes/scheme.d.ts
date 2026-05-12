@@ -16,4 +16,3 @@ export interface EncryptResult {
     chunkSize?: number;
     chunkCount?: number;
 }
-//# sourceMappingURL=scheme.d.ts.map

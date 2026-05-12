@@ -44,4 +44,3 @@ export interface BlobFetcher {
     fetchRange(offset: number, length: number): Promise<Uint8Array>;
 }
 export type CoseAlgorithmId = 3 | -65793;
-//# sourceMappingURL=types.d.ts.map

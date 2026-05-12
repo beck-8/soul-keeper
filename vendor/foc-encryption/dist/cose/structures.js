@@ -6,4 +6,3 @@ import * as cborg from 'cborg';
 export function buildEncStructure(context, protectedHeaders, externalAad) {
     return cborg.encode([context, protectedHeaders, externalAad]);
 }
-//# sourceMappingURL=structures.js.map

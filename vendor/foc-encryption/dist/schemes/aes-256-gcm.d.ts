@@ -9,4 +9,3 @@ export declare class Aes256Gcm implements EncryptionScheme {
     decrypt(key: CryptoKey, ciphertext: Uint8Array, iv: Uint8Array, protectedHeaders: Uint8Array, _metadata?: DecryptMetadata): Promise<Uint8Array>;
 }
 export { AES_GCM_IV_LENGTH, AES_GCM_TAG_LENGTH };
-//# sourceMappingURL=aes-256-gcm.d.ts.map

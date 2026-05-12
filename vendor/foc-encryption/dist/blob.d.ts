@@ -5,4 +5,3 @@ export interface ParsedBlob {
     ciphertext: Uint8Array;
 }
 export declare function parseBlob(blob: Uint8Array): ParsedBlob;
-//# sourceMappingURL=blob.d.ts.map

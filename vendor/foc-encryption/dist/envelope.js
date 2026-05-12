@@ -108,4 +108,3 @@ export function parseEnvelope(blob) {
     }
     return blob.fetchEnvelope().then(parseEnvelopeBytes);
 }
-//# sourceMappingURL=envelope.js.map
