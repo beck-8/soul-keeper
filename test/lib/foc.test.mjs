@@ -10,13 +10,13 @@ const downloadMock = vi.fn().mockResolvedValue(new Uint8Array([1, 2, 3]))
 const approveServiceMock = vi.fn().mockResolvedValue('0xapproveTxHash')
 const depositMock = vi.fn().mockResolvedValue('0xdepositTxHash')
 
+const synapseCreateMock = vi.fn().mockResolvedValue({
+  storage: { upload: uploadMock, download: downloadMock },
+  payments: { approveService: approveServiceMock, deposit: depositMock },
+})
+
 vi.mock('@filoz/synapse-sdk', () => ({
-  Synapse: {
-    create: vi.fn().mockResolvedValue({
-      storage: { upload: uploadMock, download: downloadMock },
-      payments: { approveService: approveServiceMock, deposit: depositMock },
-    }),
-  },
+  Synapse: { create: synapseCreateMock },
   calibration: { id: 314159, name: 'Calibration' },
 }))
 
@@ -28,6 +28,10 @@ vi.mock('@filoz/synapse-sdk/warm-storage', () => ({
   })),
 }))
 
+const loginSyncMock = vi.fn().mockResolvedValue({
+  receipt: { transactionHash: '0xloginTxHash' },
+  event: { args: {} },
+})
 vi.mock('@filoz/synapse-core/session-key', () => ({
   fromSecp256k1: vi.fn().mockReturnValue({
     client: { account: { address: '0xUSER' } },
@@ -35,10 +39,7 @@ vi.mock('@filoz/synapse-core/session-key', () => ({
     syncExpirations: vi.fn().mockResolvedValue(undefined),
   }),
   login: vi.fn().mockResolvedValue('0xloginTxHash'),
-  loginSync: vi.fn().mockResolvedValue({
-    receipt: { transactionHash: '0xloginTxHash' },
-    event: { args: {} },
-  }),
+  loginSync: loginSyncMock,
 }))
 
 vi.mock('viem/accounts', () => ({
@@ -116,6 +117,49 @@ describe('lib/foc', () => {
         rpcUrl: 'https://rpc.example',
       }),
     ).rejects.toThrow(/upload/i)
+  })
+
+  it('self-heals missing session-key permissions by calling loginSync then retrying', async () => {
+    synapseCreateMock
+      .mockRejectedValueOnce(
+        new Error(
+          'Session key does not have the required permissions. Please login and sync expirations with the session key first.',
+        ),
+      )
+      .mockResolvedValueOnce({
+        storage: { upload: uploadMock, download: downloadMock },
+        payments: { approveService: approveServiceMock, deposit: depositMock },
+      })
+
+    const { uploadBundle } = await import('../../lib/foc.mjs')
+    const result = await uploadBundle({
+      bytes: new Uint8Array([1, 2]),
+      sponsorKey: `0x${'11'.repeat(32)}`,
+      sessionPrivateKey: `0x${'22'.repeat(32)}`,
+      rpcUrl: 'https://rpc.example',
+    })
+
+    expect(result.pieceCid).toBe('baga6ea4seaqfake')
+    expect(loginSyncMock).toHaveBeenCalledOnce()
+    expect(synapseCreateMock).toHaveBeenCalledTimes(2)
+  })
+
+  it('does not infinite-loop if Synapse.create keeps rejecting with permissions error', async () => {
+    // mockRejectedValueOnce x2 — first attempt + retry-after-login both fail.
+    // Use Once so the persistent default mock state isn't polluted for later tests.
+    synapseCreateMock
+      .mockRejectedValueOnce(new Error('Session key does not have the required permissions.'))
+      .mockRejectedValueOnce(new Error('Session key does not have the required permissions.'))
+    const { uploadBundle } = await import('../../lib/foc.mjs')
+    await expect(
+      uploadBundle({
+        bytes: new Uint8Array([1]),
+        sponsorKey: `0x${'11'.repeat(32)}`,
+        sessionPrivateKey: `0x${'22'.repeat(32)}`,
+        rpcUrl: 'https://rpc.example',
+      }),
+    ).rejects.toThrow(/permissions/i)
+    expect(synapseCreateMock).toHaveBeenCalledTimes(2) // one initial, one after login
   })
 
   it('depositAndApproveSponsor returns both tx hashes', async () => {
