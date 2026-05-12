@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "outDir": "./runtimes/openclaw/hooks",
+    "rootDir": "./runtimes/openclaw/hooks",
+    "declaration": false,
+    "allowImportingTsExtensions": false
+  },
+  "include": ["runtimes/openclaw/hooks/**/*.ts"]
+}

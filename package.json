@@ -1,0 +1,27 @@
+{
+  "name": "soul-keeper",
+  "version": "0.1.0-mu-demo",
+  "type": "module",
+  "description": "Encrypt, persist, and self-evolve your agent's soul on Filecoin Onchain Cloud",
+  "license": "(Apache-2.0 OR MIT)",
+  "engines": { "node": ">=20" },
+  "packageManager": "pnpm@10.7.0",
+  "scripts": {
+    "lint": "biome check .",
+    "lint:fix": "biome check --write .",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:e2e": "vitest run test/e2e"
+  },
+  "dependencies": {
+    "@filoz/synapse-sdk": "^0.41.0",
+    "viem": "^2.0.0",
+    "tar-stream": "^3.1.7"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^1.9.0",
+    "@types/node": "^20.0.0",
+    "typescript": "^5.9.0",
+    "vitest": "^2.0.0"
+  }
+}

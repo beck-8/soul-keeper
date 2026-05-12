@@ -1,0 +1,15 @@
+node_modules/
+dist/
+.pending/
+
+# Local-only configuration with secrets
+config.json
+*.env
+*.env.demo
+*.key
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
