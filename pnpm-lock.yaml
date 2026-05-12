@@ -11,6 +11,9 @@ importers:
       '@filoz/synapse-sdk':
         specifier: ^0.41.0
         version: 0.41.0(typescript@5.9.3)(viem@2.48.11(typescript@5.9.3)(zod@4.4.3))
+      cborg:
+        specifier: ^5.1.0
+        version: 5.1.1
       tar-stream:
         specifier: ^3.1.7
         version: 3.2.0

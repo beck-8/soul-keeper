@@ -2,6 +2,9 @@ node_modules/
 dist/
 .pending/
 
+# Vendor dist dirs are intentionally tracked
+!vendor/**/dist/
+
 # Local-only configuration with secrets
 config.json
 .env

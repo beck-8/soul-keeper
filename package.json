@@ -4,7 +4,9 @@
   "type": "module",
   "description": "Encrypt, persist, and self-evolve your agent's soul on Filecoin Onchain Cloud",
   "license": "(Apache-2.0 OR MIT)",
-  "engines": { "node": ">=20" },
+  "engines": {
+    "node": ">=20"
+  },
   "packageManager": "pnpm@10.7.0",
   "scripts": {
     "lint": "biome check .",
@@ -13,10 +15,14 @@
     "test:watch": "vitest",
     "test:e2e": "vitest run test/e2e"
   },
+  "imports": {
+    "#foc-encryption": "./vendor/foc-encryption/dist/index.js"
+  },
   "dependencies": {
     "@filoz/synapse-sdk": "^0.41.0",
-    "viem": "^2.0.0",
-    "tar-stream": "^3.1.7"
+    "cborg": "^5.1.0",
+    "tar-stream": "^3.1.7",
+    "viem": "^2.0.0"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.9.0",
